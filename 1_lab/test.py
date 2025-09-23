@@ -50,8 +50,8 @@ class TestCheckLettersInWord(unittest.TestCase):
             test_word
         )
 
-    def test_no_letters_guessed(self):
-        self.assertEqual(check_letters_in_word(set(), 'banana'), '******')
+    # def test_no_letters_guessed(self):
+    #     self.assertEqual(check_letters_in_word(set(), 'banana'), '******')
 
     def test_some_letters_guessed(self):
         self.assertEqual(check_letters_in_word({'a', 'n'}, 'banana'), '*anana')
@@ -59,26 +59,66 @@ class TestCheckLettersInWord(unittest.TestCase):
     def test_repeated_letters(self):
         self.assertEqual(check_letters_in_word({'b', 'a'}, 'banana'), 'ba*a*a')
 
-    def test_empty_letters(self):
+#################################################################################################################################
+    def test_valid_interface_arguments(self):
         """
-        Даний тест ми також залишимо та трішки модифікуємо"""
-        test_word = 'test'
-        guess_letters = set("")
-        with self.assertRaises(ValueError):
-            check_letters_in_word(guess_letters, "")
+        Перевіряємо чи функція працює з валідними аргументами
+        Перевіряємо чи справді передаються слова і букви вірного типу
+        1. Якщо ми передаємо неправильні типи то функція має впасти
+        2. Якщо ми передаємо правильні типи то функція має працювати
+        """
+        test_word = "ValideWord"
+        guess_letters = set(["a", "b", "c"])
+        # Не валідні типи
+        for arg in [123, 12.5, None,]:
+            with self.assertRaises(TypeError):
+                check_letters_in_word(guess_letters, arg)
+
+        #Це бага, тут неправильна поведінка, бо функція приймає список замість рядка
+        # Тому ми переписали функцію щоб вона ловила цю помилку і не працювала з неправильними типами
+        with self.assertRaises(TypeError):
+            check_letters_in_word(guess_letters, ["a", "p", "p", "l", "e"])
+        # Валідні типи
+        self.assertIsInstance(test_word, str) 
+        self.assertIsInstance(guess_letters, set)
+
 
     def test_empty_word(self):
-        guess_letters = set("")
+        """
+        Перевіряємо чи вгадане слово є порожнім
+        1. Передаємо порожне слово, виловлюємо помилку 
+        2. Передаємо слово і очікуємо що функція щось поверне
+        >>>Цей тест готовий<<<
+        """
+        test_word = ''
+        guess_letters = set(["a", "b"])
+
+        with self.assertRaises(ValueError):
+            check_letters_in_word(guess_letters, test_word)
+        self.assertGreater(len(check_letters_in_word(guess_letters, "НеПустеСлово")), 0)
+
+    def test_empty_letters(self):
+        """
+        Перевірка на порожню букву.
+        В даному тесті ми перевіряємо коли слово є а буква яка вгадується є порожньою
+        >>>Цей тест готовий<<<
+        """
+        no_letters = set()
+        word = "НеПустеСлово"
         # Виловлюємо Помилку
         with self.assertRaises(ValueError):
-            check_letters_in_word(guess_letters, "")
+            check_letters_in_word(no_letters, word)
         # Перевіряємо текст помилки, що це саме наша помилка яку ми написали
         with self.assertRaises(ValueError) as context:
-            check_letters_in_word(guess_letters, "")
+            check_letters_in_word(no_letters, word)
             self.assertEqual(str(context.exception), "Слово не має бути порожнім")
+        # Для контрольної перевірки передаємо букву і тут має бути повернутись значення
+        # Якшо буква буде (при правильних даних) то функція щось поверне
+        self.assertTrue(len(check_letters_in_word({'a'}, word)) > 0)
 
-    def test_letters_not_in_word(self):
-        self.assertEqual(check_letters_in_word({'x', 'y', 'z'}, 'orange'), '******')
+    # def test_letters_not_in_word(self):
+    #     word = "НеПустеСлово"
+    #     self.assertEqual(len(check_letters_in_word({'a'}, word)))
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

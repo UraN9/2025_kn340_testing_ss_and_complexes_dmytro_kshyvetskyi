@@ -13,6 +13,10 @@ def enter_letter_from_user() -> str:
 def check_letters_in_word(letters: Set[str], word: str) -> str:
     if word == "":
         raise ValueError("Слово не має бути порожнім")
+    if not isinstance(word, str):
+        raise TypeError("Слово має бути рядком")
+    if len(letters) == 0:
+        raise ValueError("Буква не має бути порожньою")
     return "".join([l if l in letters else "*" for l in word])
 
 def check_if_word_guessed(letters: Set[str], word: str) -> bool:
