@@ -45,7 +45,12 @@ class TestEnterLetterFromUser(unittest.TestCase):
     # Тут має бути новий метод - тільки перша буква буде зараховуватись
     # Можна вводити більше однієї букви
     # Вводити можна тільки латинські букви
-    ########################################################################################################################
+    #########################################################################################################################
+    def test_enter_multiple_letters(self):
+        for test_input in ['abcріап', 'bfd']:
+            with patch('builtins.input', return_value=test_input) as mock_input:
+                self.assertEqual(enter_letter_from_user(), test_input[0])
+
 
 class TestCheckLettersInWord(unittest.TestCase):
     def setUp(self):
