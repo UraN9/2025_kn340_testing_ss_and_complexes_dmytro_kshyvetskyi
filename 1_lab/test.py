@@ -1,3 +1,4 @@
+import random
 import unittest
 from unittest.mock import patch
 from main import *
@@ -40,7 +41,36 @@ class TestEnterLetterFromUser(unittest.TestCase):
         # finally:
         #     __builtins__.input = original_input
 
+    #########################################################################################################################
+    # Тут має бути новий метод - тільки перша буква буде зараховуватись
+    # Можна вводити більше однієї букви
+    # Вводити можна тільки латинські букви
+    ########################################################################################################################
+
 class TestCheckLettersInWord(unittest.TestCase):
+    def setUp(self):
+        print("Приготуємо дані для тестів")
+        letters_to_guess = set(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
+
+        self.test_word = "".join(random.choices(list(letters_to_guess), k = random.randint(3, 8)))
+        self.guess_letters = letters_to_guess
+        # Сетапимо пусті значення для тестів які перевіряють на порожні дані
+        self.empty_test_word = ""
+        self.no_letters = set()
+        return super().setUp()
+
+    def test_user_entered_cyrillic_letter(self):
+        """
+        Перевіряємо чи користувач ввів кириличну букву
+        1. Якщо ввів кириличну букву, то функція має впасти з помилкою ValueError
+        2. Якщо ввів латинську букву, то функція має працювати і повернути щось
+        >>>Цей тест готовий<<<
+        """
+        with self.assertRaises(ValueError):
+            check_letters_in_word({'а', 'б', 'в'}, self.test_word)
+        self.assertTrue(len(check_letters_in_word({'a', 'b', 'c'}, self.test_word)) > 0)
+
     def test_all_letters_guessed(self):
         """
         Даний тест є валідний"""
@@ -67,8 +97,14 @@ class TestCheckLettersInWord(unittest.TestCase):
         1. Якщо ми передаємо неправильні типи то функція має впасти
         2. Якщо ми передаємо правильні типи то функція має працювати
         """
-        test_word = "ValideWord"
-        guess_letters = set(["a", "b", "c"])
+
+        # Ми виносимо ці змінні у setUp щоб не дублювати код
+        # test_word = "ValideWord"
+        # guess_letters = set(["a", "b", "c"])
+        # Переприсвоювати змінні не потрібно, бо вони є в setUp
+        test_word = self.test_word
+        guess_letters = self.guess_letters
+        print(f"test_word: {test_word}, guess_letters: {guess_letters}")
         # Не валідні типи
         for arg in [123, 12.5, None,]:
             with self.assertRaises(TypeError):
@@ -82,7 +118,6 @@ class TestCheckLettersInWord(unittest.TestCase):
         self.assertIsInstance(test_word, str) 
         self.assertIsInstance(guess_letters, set)
 
-
     def test_empty_word(self):
         """
         Перевіряємо чи вгадане слово є порожнім
@@ -90,12 +125,11 @@ class TestCheckLettersInWord(unittest.TestCase):
         2. Передаємо слово і очікуємо що функція щось поверне
         >>>Цей тест готовий<<<
         """
-        test_word = ''
         guess_letters = set(["a", "b"])
 
         with self.assertRaises(ValueError):
-            check_letters_in_word(guess_letters, test_word)
-        self.assertGreater(len(check_letters_in_word(guess_letters, "НеПустеСлово")), 0)
+            check_letters_in_word(self.guess_letters, self.empty_test_word)
+        self.assertGreater(len(check_letters_in_word(self.guess_letters, self.test_word)), 0)
 
     def test_empty_letters(self):
         """
@@ -103,18 +137,17 @@ class TestCheckLettersInWord(unittest.TestCase):
         В даному тесті ми перевіряємо коли слово є а буква яка вгадується є порожньою
         >>>Цей тест готовий<<<
         """
-        no_letters = set()
-        word = "НеПустеСлово"
+
         # Виловлюємо Помилку
         with self.assertRaises(ValueError):
-            check_letters_in_word(no_letters, word)
+            check_letters_in_word(self.no_letters, self.test_word)
         # Перевіряємо текст помилки, що це саме наша помилка яку ми написали
         with self.assertRaises(ValueError) as context:
-            check_letters_in_word(no_letters, word)
+            check_letters_in_word(self.no_letters, self.test_word)
             self.assertEqual(str(context.exception), "Слово не має бути порожнім")
         # Для контрольної перевірки передаємо букву і тут має бути повернутись значення
         # Якшо буква буде (при правильних даних) то функція щось поверне
-        self.assertTrue(len(check_letters_in_word({'a'}, word)) > 0)
+        self.assertTrue(len(check_letters_in_word({'a'}, self.test_word)) > 0)
 
     # def test_letters_not_in_word(self):
     #     word = "НеПустеСлово"

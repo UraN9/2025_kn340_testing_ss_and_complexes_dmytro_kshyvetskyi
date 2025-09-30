@@ -1,5 +1,6 @@
 WORDS = ["apple", "banana", "cherry", "orange", "Python"]
 
+import string
 from random import choice
 from typing import List, Set
 
@@ -7,8 +8,8 @@ def choose_secret_word(words: List[str]) -> str:
     return choice(words)
 
 def enter_letter_from_user() -> str:
-    letter = input("Введіть одну літеру: ").lower()
-    return letter
+    letter = str(input("Введіть одну літеру: ")).lower()
+    return list(letter.lower())[0]
 
 def check_letters_in_word(letters: Set[str], word: str) -> str:
     if word == "":
@@ -17,6 +18,8 @@ def check_letters_in_word(letters: Set[str], word: str) -> str:
         raise TypeError("Слово має бути рядком")
     if len(letters) == 0:
         raise ValueError("Буква не має бути порожньою")
+    if letters - set(string.ascii_lowercase):
+        raise ValueError("Літери мають бути латинськими")
     return "".join([l if l in letters else "*" for l in word])
 
 def check_if_word_guessed(letters: Set[str], word: str) -> bool:
