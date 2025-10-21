@@ -1,8 +1,11 @@
-WORDS = ["apple", "banana", "cherry", "orange", "Python"]
-
 import string
 from random import choice
 from typing import List, Set
+from lab.file_module import get_n_random_words
+
+
+WORDS = get_n_random_words(5)
+print(f"Слова для вгадування: {WORDS}")
 
 def choose_secret_word(words: List[str]) -> str:
     return choice(words)
@@ -23,7 +26,10 @@ def check_letters_in_word(letters: Set[str], word: str) -> str:
     return "".join([l if l in letters else "*" for l in word])
 
 def check_if_word_guessed(letters: Set[str], word: str) -> bool:
-    return all(l in letters for l in word)
+    if all(l in letters for l in word):
+        print("Ви вгадали букву !")
+        return True
+    return False
 
 def main():
     secret_word = choose_secret_word(WORDS)
@@ -34,10 +40,9 @@ def main():
         result = check_letters_in_word(entered_user_letters, secret_word)
         print(f"Результат перевірки літери '{entered_user_letters}' у слові: {result}")
         if check_if_word_guessed(entered_user_letters, secret_word):
-            print(f"Ви вгадали слово !")
             break
     if not check_if_word_guessed(entered_user_letters, secret_word):
-        print(f"Ви не вгадали слово !")
+        print(f"Ви не вгадали СЛОВО !")
     print("Гру завершено! загадане слово було:", secret_word)
 
 if __name__ == "__main__":

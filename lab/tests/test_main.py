@@ -1,7 +1,15 @@
 import random
 import unittest
 from unittest.mock import patch
-from main import *
+from lab.main import *
+
+def test_func_check_if_word_guessed():
+    # Тест який перевіряє чи при виклику функції був здійснений вивід через print
+    # print буде викликатись тільки при правильно вгаданих буквах
+    with patch('builtins.print') as mock_print:
+        result = check_if_word_guessed({'a', 'b', 'c'}, 'abc')
+        mock_print.assert_called_with("Ви вгадали букву !")
+        assert result is True, "Функція має повернути True коли всі букви вгадані"
 
 class TestWordChoice(unittest.TestCase):
     def test_word_in_list(self):
