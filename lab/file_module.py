@@ -1,7 +1,21 @@
 # Цей модуль буде відповідати за генерацію слів які потрібно вгадати
 import random
 
-INITIAL_WORDS = ["apple", "banana", "cherry", "orange", "Python", "testing", "module", "function", "variable", "exception", "Developer"]
+INITIAL_WORDS = [
+    "apple",
+    "banana",
+    "cherry",
+    "orange",
+    "Python",
+    "testing",
+    "module",
+    "function",
+    "variable",
+    "exception",
+    "Developer",
+]
+
+
 def get_n_random_words(n: int) -> list[str]:
     if n > len(INITIAL_WORDS):
         print("Неможливо згенерувати запитувану кількість слів.")
