@@ -14,6 +14,8 @@ on:
         description: 'Python version to use'
         required: false
         default: '3.12'
+  schedule:
+    - cron: '0 7 * * tue'
 
 permissions:
   contents: read
