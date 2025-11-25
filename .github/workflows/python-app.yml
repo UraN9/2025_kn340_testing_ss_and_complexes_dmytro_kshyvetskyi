@@ -26,11 +26,16 @@ jobs:
     name: Start Job
     runs-on: ubuntu-latest
     steps:
-    - name: Echo Job Started
-      run: echo "Job Started"
+    - name: Echo commit info
+      if: github.event_name == 'push' || github.event_name == 'pull_request'
+      run: echo "Запуск з назвою коміту - ${{ github.event.head_commit.message }}"
+    
+    - name: Echo manual trigger info
+      if: github.event_name == 'workflow_dispatch'
+      run: echo "Action запустив користувач - ${{ github.actor }}"
 
   run-linters:
-    needs: start
+    needs: start # Це створює залежність від job 'start' і відображається у вигляді графа
     name: Run Linters
     runs-on: ubuntu-latest
     steps: 
