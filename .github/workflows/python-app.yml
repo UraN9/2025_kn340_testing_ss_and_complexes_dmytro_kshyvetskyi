@@ -83,9 +83,25 @@ jobs:
       env: 
         POETRY_VIRTUALENVS_CREATE: false
       run: |
+        pwd
         python -m pip install --upgrade pip
         poetry install --with dev
     - name: Test with pytest
       working-directory: ./lab
       run: |
         pytest -v
+      # генеруємо звіт
+    - name: Generate Report
+      working-directory: ./lab
+      run: |
+        #запускаємо через ЮнітТести
+        #coverage run -m unittest -v
+        #або через ПайТест
+        coverage run -m pytest -v
+        coverage xml
+    # відсилаємо його в Coverage
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./lab
+  
