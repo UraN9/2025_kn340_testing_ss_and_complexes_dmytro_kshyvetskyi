@@ -89,7 +89,7 @@ jobs:
     - name: Test with pytest
       working-directory: ./lab
       run: |
-        pytest -v
+        pytest --cov --junitxml=junit.xml -o junit_family=legacy -v
       # генеруємо звіт
     - name: Generate Report
       working-directory: ./lab
@@ -98,7 +98,12 @@ jobs:
         #coverage run -m unittest -v
         #або через ПайТест
         coverage run -m pytest -v
-        coverage xml
+        coverage xml  
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/test-results-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
     # відсилаємо його в Coverage
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v5
