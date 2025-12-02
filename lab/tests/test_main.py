@@ -47,16 +47,17 @@ class TestWordChoice(unittest.TestCase):
 
 
 class TestEnterLetterFromUser(unittest.TestCase):
-    @patch('builtins.input', side_effect=['1', 'a'])
+    @patch("builtins.input", side_effect=["1", "a"])
     def test_enter_letter_from_user(self, mock_input):
-        self.assertEqual(enter_letter_from_user(), '1')
-        self.assertEqual(enter_letter_from_user(), 'a')
+        self.assertEqual(enter_letter_from_user(), "1")
+        self.assertEqual(enter_letter_from_user(), "a")
 
         # __builtins__.input = mock_input
         # try:
         #     self.assertEqual(enter_letter_from_user(), 'a')
         # finally:
         #     __builtins__.input = original_input
+
 
 #     #########################################################################################################################
 #     # Тут має бути новий метод - тільки перша буква буде зараховуватись
