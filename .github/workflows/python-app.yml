@@ -101,7 +101,8 @@ jobs:
         coverage xml
     # відсилаємо його в Coverage
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
         directory: ./lab
+        token: ${{ secrets.CODECOV_TOKEN }}
   
