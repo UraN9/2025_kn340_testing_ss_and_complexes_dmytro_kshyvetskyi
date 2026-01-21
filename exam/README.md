@@ -1,3 +1,8 @@
+<span style="font-size: 26px; font-weight: bold;">Екзаменаційна робота</span>  
+<span style="font-size: 26px; font-weight: bold;">З дисципліни «Тестування програмних систем та комплексів»</span>  
+<span style="font-size: 26px; font-weight: bold;">Студента групи КН - 340</span>  
+<span style="font-size: 26px; font-weight: bold;">Кшивецький Дмитро</span>
+
 # Білет №9
 
 ## 1. Що таке граничні значення (Boundary Values) і чому помилки часто трапляються саме там?
