@@ -1,7 +1,7 @@
-<span style="font-size: 26px; font-weight: bold;">Екзаменаційна робота</span>  
-<span style="font-size: 26px; font-weight: bold;">З дисципліни «Тестування програмних систем та комплексів»</span>  
-<span style="font-size: 26px; font-weight: bold;">Студента групи КН - 340</span>  
-<span style="font-size: 26px; font-weight: bold;">Кшивецький Дмитро</span>
+<h1><p align="center"><strong>Екзаменаційна робота</strong></p>
+<p align="center"><strong>З дисципліни «Тестування програмних систем та комплексів»</strong></p>
+<p align="center"><strong>Студента групи КН-340</strong></p>
+<p align="center"><strong>Кшивецький Дмитро</strong></p></h1>
 
 # Білет №9
 
